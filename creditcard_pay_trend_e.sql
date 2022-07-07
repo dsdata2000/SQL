@@ -14,13 +14,15 @@ use test;
 -- 4248, 1616
 -- *******************************************************
 
+set @n2x = (select count(*) from Creditcard_feature_ext where EDUCATION=2);
+
 drop table if exists pay_trend_e;
 create table pay_trend_e
 (month_ varchar(6) not null,
 n2 float);
 
 insert into pay_trend_e(month_, n2)
-select "APR", count(ta0) from (select * from Creditcard_feature_ext where EDUCATION=2) sub
+select "APR", count(ta0)/n2x from (select * from Creditcard_feature_ext where EDUCATION=2) sub
 group by ta0  having ta0=1;
 
 insert into pay_trend_e(month_, n2)
