@@ -32,16 +32,16 @@ VisitorType1,VisitorType,Weekend1,Weekend,Revenue1,Revenue)
 select FIELD1,Administrative,Administrative_Duration, Informational, Informational_Duration,
 ProductRelated,ProductRelated_Duration,BounceRates,ExitRates,PageValues,SpecialDay,Month1,
 case 
-when Month1 like "Nov" then -4
-when Month1 like "May" then -3 
-when Month1 like "Mar" then -2
-when Month1 like "Dec" then -1
-when Month1 like "Oct" then 0
-when Month1 like "Sep" then 1
-when Month1 like "Aug" then 2
-when Month1 like "Jul" then 3
-when Month1 like "June" then 4
-else 5 end as Month_, 
+when Month1 like "Nov" then 1
+when Month1 like "May" then 2 
+when Month1 like "Mar" then 3
+when Month1 like "Dec" then 4
+when Month1 like "Oct" then 5
+when Month1 like "Sep" then 6
+when Month1 like "Aug" then 7
+when Month1 like "Jul" then 8
+when Month1 like "June" then 9
+else 10 end as Month_, 
 OperatingSystems,Browser,Region,TrafficType,VisitorType1,
 case 
 when VisitorType1 like "Returning_Visitor" then 1 
