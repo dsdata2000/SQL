@@ -1,3 +1,5 @@
+
+
 SELECT * FROM test1.bookings limit 8;
 drop table if exists test1.temp;
 create table if not exists test1.temp(
@@ -36,6 +38,8 @@ surname,firstname,address,zipcode,telephone,recommendedby,joindate
 from test1.temp 
 join test1.Members on 
 test1.Members.memid=test1.temp.memid;
+
+drop table if exists test1.temp;
 
 select count(*) from test1.team;
 
