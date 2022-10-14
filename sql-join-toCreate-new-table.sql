@@ -1,71 +1,44 @@
-SELECT * FROM test1.bookingsI;
+SELECT * FROM test1.bookings limit 8;
+drop table if exists test1.temp;
+create table if not exists test1.temp(
+bookid int not null primary key,
+facid int not null,
+memid int not null,
+memid1 int not null,
+starttime varchar(19),
+slots int not null
+);
+insert into test1.temp(bookid,facid,memid,memid1,starttime,slots)
+select bookid,facid,memid,memid,starttime,slots from test1.bookings;
 
-alter table test1.bookingsI drop column  memid1;
-alter table test1.bookingsI add column memid1 int not null after slots;
-select memid from test1.bookings limit 8;
+select * from test1.temp;
 
+drop table if exists test1.team;
 
-select distinct(memid), count(memid) as n from test1.bookingsI
-group by memid order by memid asc;
+create table if not exists test1.team(
+bookid int not null primary key,
+facid int not null,
+memid1 int not null,
+starttime varchar(19),
+slots int not null,
+surname varchar(17),
+firstname varchar(9),
+address varchar(39),
+zipcode int,
+telephone varchar(14),
+recommendedby varchar(2),
+joindate varchar(19)
+);
+insert into test1.team(bookid,facid,memid1,starttime,slots,
+surname,firstname,address,zipcode,telephone,recommendedby,joindate)
+select bookid,facid,memid1,starttime,slots,
+surname,firstname,address,zipcode,telephone,recommendedby,joindate
+from test1.temp 
+join test1.Members on 
+test1.Members.memid=test1.temp.memid;
 
-select count(*) from test1.MembersI;
+select count(*) from test1.team;
 
-select sum(n) from
-(
-select distinct(memid), count(memid) as n from test1.bookingsI
-group by memid order by memid asc
-) sub; 
-
-select distinct(memid), count(memid) from test1.MembersI
-group by memid order by memid desc;
--- select * from test1.employeeI limit 5;
-
-
-drop table if exists test1.employeeI;
-
-create table if not exists test1.employeeI(
-memid1 int not null 
-, firstname varchar(9)
-, surname varchar(17)
-, zipcode int
-, joindate varchar(19)
-, telephone varchar(14)
-, bookid int
-, starttime varchar(19)
-, slots int
-); 
-insert into test1.employeeI(
-memid1
-, firstname 
-, surname 
-, zipcode 
-, joindate 
-, telephone 
-, bookid 
-, starttime 
-, slots
-) 
-select memid1 
-, firstname 
-, surname 
-, zipcode 
-, joindate 
-, telephone 
-, bookid 
-, starttime 
-, slots 
-from test1.bookingsI
-inner  join test1.MembersI on 
-(test1.MembersI.memid=test1.bookingsI.memid);
-
-select * from test1.employeeI;
-
-
-
- 
-
--- select 4043*31 from test1.Members limit 1;  -- 125,333
-
-
+select * from test1.team limit 20;
 
 
